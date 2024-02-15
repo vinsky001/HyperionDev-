@@ -9,7 +9,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('/src/Assets/pexels-bilal-mansuri-10919581.jpg');
+  background: url('./Assets/pexels-bilal-mansuri-10919581.jpg');
   background-size: cover;
   background-position: center;
 }

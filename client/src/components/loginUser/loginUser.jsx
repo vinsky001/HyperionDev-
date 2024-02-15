@@ -6,8 +6,8 @@ import './loginUser.css';
 
 const Login = () => {
     const [isRegistering, setIsRegistering] = useState(false);
-    const [username, setUsername] = useState('');    
-    const [password, setPassword] = useState('');
+    const [username] = useState('');    
+    const [password] = useState('');
     const navigate = useNavigate();
 
     const toggleRegister = () => {

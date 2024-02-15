@@ -1,12 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/loginUser/loginUser';
 import Dashboard from './components/dashboard/dashboard';
 
-
-
 const App = () => {
-  // eslint-disable-next-line no-undef
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Function to handle authentication status
@@ -14,21 +11,31 @@ const App = () => {
     setIsAuthenticated(status);
   };
 
-return (
-  <Router>
-    <div>   
-
+  return (
+    <Router>
       <Routes>
-        {/* Define routes for Login and Dashboard */}
+        {/* Define route for Login */}
+        <Route path="/" element={<Login onAuthentication={handleAuthentication} />} />
+        
+        {/* route to dashboard */}
         <Route
-          path="/"
-          element={<Login onAuthentication={handleAuthentication} />}
+          path="/dashboard"
+          element={isAuthenticated ? (
+            <>
+              <Navigate to="/dashboard/welcome" />
+              <Dashboard />
+            </>
+          ) : (
+            <Navigate to="/" />
+          )}
+        />        
+        <Route
+          path="/dashboard/welcome"
+          element={isAuthenticated ? <h1>Hello, you are logged in</h1> : <Navigate to="/" />}
         />
-        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
-    </div>
-  </Router>
-);
-}
+    </Router>
+  );
+};
 
 export default App;
