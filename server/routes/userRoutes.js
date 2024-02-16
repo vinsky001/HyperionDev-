@@ -2,11 +2,13 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import { filterUsername } from './server/middlewares/authMiddleware';
+
 
 const router = express.Router();
 
 // User Registration
-router.post('/register', async (req, res) => {
+router.post('/register', filterUsername, async (req, res) => {
   try {
     const { username, email, password } = req.body;
 

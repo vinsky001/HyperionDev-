@@ -1,18 +1,17 @@
-import jwt from 'jsonwebtoken';
+const inappropriateWords = ['word1', 'word2', 'word3', 'word4', 'word5', 'word6', 'word7', 'word8', 'word9', 'word10'];
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
+const filterUsername = (req, res, next) => {
+  const { username } = req.body; // Assuming the username is sent in the request body
+  
+  // Check if the username contains any inappropriate words
+  const containsInappropriateWord = inappropriateWords.some(word => username.toLowerCase().includes(word.toLowerCase()));
+  
+  if (containsInappropriateWord) {
+    return res.status(400).json({ message: 'Username contains inappropriate words' });
   }
+  
+  // If username is clean, proceed to next middleware
+  next();
+};
 
-  jwt.verify(token, 'secret_key', (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-    req.user = decoded;
-    next();
-  });
-}
-
-export { verifyToken };
+export { filterUsername };
