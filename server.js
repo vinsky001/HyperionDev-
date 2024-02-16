@@ -1,17 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import userRouter from './server/routes/userRoutes';
-import { verifyToken } from './server/middleware/verifyToken';
 
 
-const app = express();
+
+const app = express(); 
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://vinsky:99iCloud@cluster0.omftxzi.mongodb.net/', {
+mongoose.connect('mongodb+srv://vinsky:<password>@cluster0.omftxzi.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
