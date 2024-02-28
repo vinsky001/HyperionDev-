@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import './loginUser.css';
 
 const Login = () => {
     const [isRegistering, setIsRegistering] = useState(false);
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -20,7 +19,7 @@ const Login = () => {
         event.preventDefault();
         try {
             // Send login request to backend server
-            const response = await fetch('/login', {
+            const response = await fetch('http://localhost:5000/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -45,13 +44,16 @@ const Login = () => {
     const handleRegistration = async (event) => {
         event.preventDefault();
         try {
+            if (password !== confirmPassword) {
+                throw new Error('Passwords do not match, Please try again')
+            }
             // Send registration request to backend server
-            const response = await fetch('/register', {
+            const response = await fetch('http://localhost:5000/register', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ username, email, password })
+                body: JSON.stringify({ email, password })
             });
 
             if (response.ok) {
@@ -73,12 +75,6 @@ const Login = () => {
         <div className="wrapper">
             <form onSubmit={isRegistering ? handleRegistration : handleLogin}>
                 <h1>{isRegistering ? 'Register' : 'Sign In'}</h1>
-                {!isRegistering && (
-                    <div className="input-box">
-                        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
-                        <FaUser className="icon"/>
-                    </div>
-                )}
                 <div className="input-box">
                     <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     <MdEmail className="icon"/>
