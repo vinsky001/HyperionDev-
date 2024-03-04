@@ -19,7 +19,7 @@ const Login = () => {
         event.preventDefault();
         try {
             // Send login request to backend server
-            const response = await fetch('http://localhost:5000/login', {
+            const response = await fetch('http://localhost:5000/api/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -48,7 +48,7 @@ const Login = () => {
                 throw new Error('Passwords do not match, Please try again')
             }
             // Send registration request to backend server
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch('http://localhost:5000/api/register', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
