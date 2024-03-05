@@ -9,7 +9,7 @@ const router = express.Router();
 
 // User Registration
 
-router.post('/register', filterUsername, async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -19,14 +19,14 @@ router.post('/register', filterUsername, async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-     
-    const newUser = new User({email, password: hashedPassword });
+
+    const newUser = new User({ email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.json({ message: 'User registered successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.json({ message: 'Internal server error' });
   }
 });
 
@@ -53,10 +53,10 @@ router.post('/login', async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ token });
+    res.json({ token, email });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.json({ message: 'Internal server error' });
   }
 });
 
