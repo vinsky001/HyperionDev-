@@ -2,14 +2,18 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/users.js';
-import { filterUsername } from '../middlewares/authMiddleware.js';
+//import { filterUsername } from '../middlewares/authMiddleware.js';
 
 
 const router = express.Router();
 
 // User Registration
 
+<<<<<<< HEAD
 router.post('/register', async (req, res) => {
+=======
+router.post('/register',  async (req, res) => {
+>>>>>>> 84ab6169c91a4c8ec4b18a934c370d637b1020f1
   try {
     const { email, password } = req.body;
 
@@ -18,6 +22,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
+    
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({ email, password: hashedPassword });

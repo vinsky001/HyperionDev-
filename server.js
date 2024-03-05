@@ -3,11 +3,12 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import userRoutes from './server/routes/userRoutes.js';
 import dotenv from 'dotenv';
+import connectDB from './server/utils/connect-mongo.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
-const app = express(); 
+const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -19,13 +20,7 @@ app.use('/api', userRoutes);
 // });
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', () => console.log('Connected to MongoDB'));
+connectDB();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -26,13 +26,49 @@ const Login = () => {
         };
 
         try {
+<<<<<<< HEAD
             await LoginUser(userData, setAuth);
+=======
+            // Send login request to backend server
+            const response = await fetch('http://localhost:5000/api/login', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            })
+            if (response.ok) {
+                // Authentication successful, redirect to dashboard
+                navigate("/dashboard");
+            } else {
+                // Authentication failed, display error message
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Login failed. Please try again.");
+             }
+>>>>>>> 84ab6169c91a4c8ec4b18a934c370d637b1020f1
         } catch (error) {
             console.error(error.message || 'An error occurred during sign-in');
         }
     };
 
+<<<<<<< HEAD
     useEffect(() => {
+=======
+    const handleRegistration = async (event) => {
+        event.preventDefault();
+        try {
+            if (password !== confirmPassword) {
+                throw new Error('Passwords do not match, Please try again')
+            }
+            // Send registration request to backend server
+            const response = await fetch('http://localhost:5000/api/register', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+>>>>>>> 84ab6169c91a4c8ec4b18a934c370d637b1020f1
 
 
         if (auth) {
